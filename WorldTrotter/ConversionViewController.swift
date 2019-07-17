@@ -22,6 +22,11 @@ class ConversionViewController: UIViewController{ //, UITextFieldDelegate {
     // TODO: Modify code to reject (return false) if it finds any letters in the replacement string
     //  (hint-use Documentation to find a NSCharacterSet collection for letters, and a String method that finds a range using a NSCharacterSet)
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let characterset = NSCharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        if string.rangeOfCharacter(from: characterset.inverted) == nil {
+            return false
+        }
+        
         
         let existingTextHasDecimalSeparator = textField.text?.range(of: ".")
         let replacementTextHasDecimalSeparator = string.range(of: ".")
@@ -36,7 +41,11 @@ class ConversionViewController: UIViewController{ //, UITextFieldDelegate {
     // TODO: Add and modify the method to build expectation for the output by changing the celsiusLabel when the input field is selected
     // modify the celsiusLabel text to be a single question mark
     // modify the celsiusLabel color to be 60% red, 60% green, and 40% blue (refer to the Developer Documentation for UIColor)
-
+    @IBAction func textFieldDidBeginEditing(_ sender: Any) {
+        celsiusLabel.text = "?"
+        celsiusLabel.textColor = UIColor(displayP3Red: 0.6, green: 0.6, blue: 0.4, alpha: 1.0)
+    }
+    
     
     // EVENT HANDLER METHOD : Called when TextField is Changed (notice the optional binding)
     @IBAction func fahrenheitFieldEditingChanged(_ textField: UITextField) {
